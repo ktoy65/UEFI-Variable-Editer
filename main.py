@@ -42,10 +42,13 @@ if __name__ == "__main__":
 
     setup_var.load_json()
 
-    columns, rows = get_terminal_size()
-    print_c("\n" * rows)
-
+    return_string = ("",None)#记录每次指令的返回提示
     while True:
+
+        # 打印新页面
+        columns, rows = get_terminal_size()
+        print_c("\n" * rows)
+
         if setup_var.add_options_list_final_code:
             print_c("修改缓存列表：")
             j = 0
@@ -55,6 +58,9 @@ if __name__ == "__main__":
             print_c("\n")
         if cur_title is not None:
             print_c(f"当前指定菜单：{cur_title[1]}\n")
+
+        print("\n")
+        print_c(*iter(return_string))
 
         tmp_str = ""
         tmp_str2 = ""
@@ -71,24 +77,18 @@ if __name__ == "__main__":
             name = input("名称：>")
             result = setup_var.search_offset_name(name)
             if not result:
-                columns, rows = get_terminal_size()
-                print_c("\n" * rows)
-                print_c("没有此项")
+                return_string = ("没有此项","red")
                 continue
             setup_var.print_offset_list(result)
             which = input("哪一个：>")
 
             if (which == "") or int(which) > len(result) or int(which) <= 0:
-                columns, rows = get_terminal_size()
-                print_c("\n" * rows)
-                print_c("无效选择","red")
+                return_string = ("无效选择","red")
                 continue
 
             value = input("改多少：>")
             if (value == "") or not setup_var.add_var_setting(result[int(which)-1], int(value)):
-                columns, rows = get_terminal_size()
-                print_c("\n" * rows)
-                print_c("值不符合要求","red")
+                return_string = ("无效选择","red")
                 continue
 
         elif arg == '2':
@@ -100,9 +100,7 @@ if __name__ == "__main__":
 
                 which = input("哪一个：>")
                 if (which == "") or int(which) > len(result) or int(which) < 0:
-                    columns, rows = get_terminal_size()
-                    print_c("\n" * rows)
-                    print_c("无效选择","red")
+                    return_string = ("无效选择","red")
                     continue
 
                 if int(which) == 0:
@@ -110,9 +108,7 @@ if __name__ == "__main__":
                 else:
                     value = input("改多少:>")
                     if (value == "") or not setup_var.add_var_setting(result[int(which) - 1], int(value)):
-                        columns, rows = get_terminal_size()
-                        print_c("\n" * rows)
-                        print_c("值不符合要求","red")
+                        return_string = ("值不符合要求","red")
                         continue
 
             if (cur_title is None) or re_choose:
@@ -121,17 +117,13 @@ if __name__ == "__main__":
                 if result:
                     setup_var.print_title_list(result)
                 else:
-                    columns, rows = get_terminal_size()
-                    print_c("\n" * rows)
-                    print_c("没有搜到...今日无事可做...","red")
+                    return_string = ("没有搜到...今日无事可做...","red")
                     continue
 
 
                 title = input("第几个：>")
                 if (title == "") or int(title) > len(result) or int(title) < 0:
-                    columns, rows = get_terminal_size()
-                    print_c("\n" * rows)
-                    print_c("数目不符合要求","red")
+                    return_string = ("数目不符合要求","red")
                     continue
 
                 cur_title = result[int(title)-1]
@@ -139,20 +131,16 @@ if __name__ == "__main__":
 
         elif arg == '3':
             if not setup_var.add_options_list_final_code:
-                columns, rows = get_terminal_size()
-                print_c("\n" * rows)
-                print_c("没有缓存的选项可保存...今日无事可做...","red")
+                return_string = ("没有缓存的选项可保存...今日无事可做...","red")
                 continue
             if set_auto_boot:
                 result = boot_set.save_and_set_boot()
                 if not result[0]:
-                    columns, rows = get_terminal_size()
-                    print_c("\n" * rows)
                     if result[1] == "nodisk":
-                        print_c("没有找到合适的引导设备，请先挂载一个fat32/efi分区","red")
+                        return_string = ("没有找到合适的引导设备，请先挂载一个fat32/efi分区","red")
                         continue
                     else:
-                        print_c(result[1])
+                        return_string = (result[1],"red")
                         continue
             else:
                 boot_set.save_and_only_create_boot_dir()
@@ -166,35 +154,23 @@ if __name__ == "__main__":
 
         elif arg == '5':
             if not setup_var.add_options_list_final_code:
-                columns, rows = get_terminal_size()
-                print_c("\n" * rows)
-                print_c("没有缓存的选项...今日无事可做...","red")
+                return_string = ("没有缓存的选项...今日无事可做...","red")
                 continue
             which = input("哪一个:>")
             if (which == "") or int(which) > len(setup_var.add_options_list_final_code) or int(which) <= 0:
-                columns, rows = get_terminal_size()
-                print_c("\n" * rows)
-                print_c("无效选择","red")
+                return_string = ("无效选择","red")
                 continue
             setup_var.rm_var_setting(int(which)-1)
 
         elif arg == '6':
             result = input("确定要重启吗？(y/n 默认y)")
             if result == 'n'or result == 'N'or result == 'no'or result == 'NO'or result == 'No':
-                columns, rows = get_terminal_size()
-                print_c("\n" * rows)
-                print_c("今日无事可做...","red")
+                return_string = ("今日无事可做...","red")
                 continue
             os.system("shutdown /r /t 0")
 
         else:
-            columns, rows = get_terminal_size()
-            print_c("\n" * rows)
-            print_c("无法识别的指令...","red")
+            return_string = ("无法识别的指令...","red")
             continue
 
-
-
-        columns, rows = get_terminal_size()
-        print_c("\n" * rows)
-        print_c("成功","cyan")
+        return_string = ("成功","cyan")
