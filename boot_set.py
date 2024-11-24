@@ -94,10 +94,11 @@ def rewrite_nsh(vars_content,enable_auto_boot = True):
 
 def save_and_set_boot():
     auto_boot = True
-    disk = get_boot_disk()[0]
-    if not disk:
+    disklist = get_boot_disk()
+    if not disklist:
         return False, "nodisk"
 
+    disk = disklist[0]
     disk = disk + "\\"
     rewrite_nsh(setup_var.gen_file_content(auto_boot),auto_boot)
     result = cp_boot_tools_to_disk(disk)

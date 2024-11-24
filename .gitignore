@@ -7,6 +7,12 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+
+config
+dump.bin
+bootTools/startup.nsh
+parseData/
+efi/
 python/
 .Python
 build/
