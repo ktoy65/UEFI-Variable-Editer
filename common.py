@@ -70,6 +70,35 @@ def write_file(file_path,content,type = "wb"):
         with open(file_path, type,encoding='utf-8') as file:
             file.write(content)
 
+def print_c(string:str,color:str = "write"):
+    if color is None:
+        return
+    if color == "write":
+        print(f"{string}")
+        return
+    if color == "red":
+        print(f"\033[1;31m{string}\033[0m")
+        return
+    if color == "green":
+        print(f"\033[1;32m{string}\033[0m")
+        return
+    if color == "yellow":
+        print(f"\033[1;33m{string}\033[0m")
+        return
+    if color == "blue":
+        print(f"\033[1;34m{string}\033[0m")
+        return
+    if color == "magenta":
+        print(f"\033[1;35m{string}\033[0m")
+        return
+    if color == "cyan":
+        print(f"\033[1;36m{string}\033[0m")
+        return
+    if color == "grey":
+        print(f"\033[1;37m{string}\033[0m")
+        return
+    print(string)
+
 def run_command(command:list):
     try:
         # 执行命令并捕获输出
