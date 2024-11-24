@@ -55,6 +55,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\WinUsers\abc67\Documents\GitHub\UEFI-Variable-Editer" />
       <recent name="C:\Users\abc67\Documents\GitHub\UEFI-Variable-Editer" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -125,7 +126,7 @@
       <workItem from="1732028044676" duration="511000" />
       <workItem from="1732200456857" duration="2361000" />
       <workItem from="1732373168113" duration="14000" />
-      <workItem from="1732472256743" duration="3025000" />
+      <workItem from="1732472256743" duration="6336000" />
     </task>
     <servers />
   </component>
@@ -136,7 +137,7 @@
     <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$setup_var.coverage" NAME="setup_var 覆盖结果" MODIFIED="1730570952738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$bios_parse.coverage" NAME="bios_parse 覆盖结果" MODIFIED="1730563713138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$MEA.coverage" NAME="MEA 覆盖结果" MODIFIED="1730532168211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$main.coverage" NAME="main 覆盖结果" MODIFIED="1732475229896" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$main.coverage" NAME="main 覆盖结果" MODIFIED="1732478594618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$boot_set.coverage" NAME="boot_set 覆盖结果" MODIFIED="1730529547757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

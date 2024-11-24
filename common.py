@@ -70,7 +70,7 @@ def write_file(file_path,content,type = "wb"):
         with open(file_path, type,encoding='utf-8') as file:
             file.write(content)
 
-def print_c(string:str,color:str = "write"):
+def print_c(string,color:str = "write"):
     if color is None:
         return
     if color == "write":
