@@ -87,6 +87,7 @@ if __name__ == "__main__":
                     return_string = ("无效选择","red")
                     continue
 
+                setup_var.print_oneOf_option_detail(setup_var.search_oneOf_offset_options_detail(result[int(which)-1][2]))
                 value = input("改多少：>")
                 if (value == "") or not setup_var.add_var_setting(result[int(which)-1], int(value)):
                     return_string = ("无效选择","red")

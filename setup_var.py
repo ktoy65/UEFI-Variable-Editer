@@ -1,11 +1,11 @@
 import re
 import os,sys
 
-import common
+
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 if __name__ == "__main__":sys.path.append(current_dir)
-
+import common
 import bios_parse
 add_options_list_final_code = []
 add_options_list = []
@@ -43,6 +43,10 @@ def search_offset_name_by_title_index(index):
     '''
     temp_list = bios_parse.regx_offset_info(bios_parse.uefi_variable_file_content,index,"menu")
     return temp_list
+
+def search_oneOf_offset_options_detail(name):
+    tmp = bios_parse.regx_offset_info(bios_parse.uefi_variable_file_content,name,type="oneOf")
+    return tmp
 
 def load_json():
     global add_options_list
@@ -101,6 +105,22 @@ def print_offset_list(offset_list):
         j+=1
         print(f"{j:<4}.{i[menu]:<40}\t名称:{i[name]:<50}\tuefi变量:{bios_parse.get_var_store_name(i[store]):<40}\t偏移:{i[offset]:<10}\t字:{i[size]:<10}\t最小值:{int(i[min],16):<10}\t最大值:{int(i[max],16):<10}")
 
+def print_oneOf_option_detail(offset_options):
+    common.print_c("可能的选项: ","cyan")
+    common.print_c("{写入值}:--->{名称}", "magenta")
+    for i,elem in enumerate(offset_options) :
+        name = elem[0]
+        value_list = elem[1].split(', ')
+        value = value_list[0]
+        print_string = f"{value}:--->{name}"
+        if len(value_list)>1:
+            type1 = value_list[1]
+            type2 = value_list[2]
+            print_string += f"  ({type1},{type2})"
+        common.print_c(print_string)
+
+
+
 
 def print_title_list(offset_list):
     j = 0
@@ -128,15 +148,19 @@ def gen_file_content(enable_final_reboot = True):
 
 
 if __name__ == "__main__":
-    # 查找列表 ----> 输出列表内选项
-    print_title_list(search_offset_title("mem"))  #通过字符串搜寻选项菜单
-    print(search_offset_name_by_title_index(46)[3]) #选择给定菜单下的某项选项
-    add_var_setting(search_offset_name_by_title_index(46)[3],1) #指定选项写入待写区
+    bios_parse.init()
+    # # 查找列表 ----> 输出列表内选项
+    # print_title_list(search_offset_title("mem"))  #通过字符串搜寻选项菜单
+    # print(search_offset_name_by_title_index(46)[3]) #选择给定菜单下的某项选项
+    # add_var_setting(search_offset_name_by_title_index(46)[3],1) #指定选项写入待写区
+    #
+    # # 直接查找选项 ----> 输出选项
+    # print_offset_list(search_offset_name("imon offset"))
+    # add_var_setting(search_offset_name("imon offset")[1],20000)
+    #
+    # # 转换后的指令
+    # print(gen_file_content())
 
-    # 直接查找选项 ----> 输出选项
-    print_offset_list(search_offset_name("imon offset"))
-    add_var_setting(search_offset_name("imon offset")[1],20000)
+    print_oneOf_option_detail(search_oneOf_offset_options_detail("Memory profile"))
 
-    # 转换后的指令
-    print(gen_file_content())
 

@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="fe8d0dd1-0c73-45e0-9d18-5827bdab1771" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bios_parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/bios_parse.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup_var.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup_var.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +127,8 @@
       <workItem from="1732028044676" duration="511000" />
       <workItem from="1732200456857" duration="2361000" />
       <workItem from="1732373168113" duration="14000" />
-      <workItem from="1732472256743" duration="6336000" />
+      <workItem from="1732472256743" duration="14709000" />
+      <workItem from="1732515093241" duration="3378000" />
     </task>
     <servers />
   </component>
@@ -134,10 +136,10 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$setup_var.coverage" NAME="setup_var 覆盖结果" MODIFIED="1730570952738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$bios_parse.coverage" NAME="bios_parse 覆盖结果" MODIFIED="1730563713138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$setup_var.coverage" NAME="setup_var 覆盖结果" MODIFIED="1732517947964" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$bios_parse.coverage" NAME="bios_parse 覆盖结果" MODIFIED="1732517904191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$MEA.coverage" NAME="MEA 覆盖结果" MODIFIED="1730532168211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$main.coverage" NAME="main 覆盖结果" MODIFIED="1732478594618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$main.coverage" NAME="main 覆盖结果" MODIFIED="1732518407033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$boot_set.coverage" NAME="boot_set 覆盖结果" MODIFIED="1730529547757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

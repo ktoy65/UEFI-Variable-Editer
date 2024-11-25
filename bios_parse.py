@@ -162,7 +162,7 @@ def regx_titles_info(content):
             t_list.append(offset_base_list)
     return t_list
 
-def regx_offset_info(content,search,type="name",titles_list_=None)->list:
+def regx_offset_info(content,search,type ="name",titles_list_=None)->list:
     if not titles_list_:
         titles_list_ = regx_titles_info(content)
 
@@ -174,12 +174,13 @@ def regx_offset_info(content,search,type="name",titles_list_=None)->list:
             search_name = r".+"
         else:
             search_name = search_name.replace(" ",r"\s")
+            search_name = search_name.replace("-",r"\-")
 
         #匹配符----选择offset值
         reg1 = r"([\S]+)\sPrompt:\s\"([^\"]*"
-        reg2 = r"[^\"]*)\",\sHelp:\s\"([^\"]*)\",[^\n]*,\sVarStoreId:\s([0-9A-Fx]+),\sVarOffset:\s([0-9A-Fx]+).*,\sSize:\s([0-9A-Fx]+),\sMin:\s([0-9A-Fx]+),\sMax:\s([0-9A-Fx]+)"
+        reg2 = r"[^\"]*)\",\sHelp:\s\"([\S\s\n]*)\",[^\n]*,\sVarStoreId:\s([0-9A-Fx]+),\sVarOffset:\s([0-9A-Fx]+).*,\sSize:\s([0-9A-Fx]+),\sMin:\s([0-9A-Fx]+),\sMax:\s([0-9A-Fx]+)"
         regx = reg1+search_name+reg2
-        pattern = re.compile(regx,re.IGNORECASE)
+        pattern = re.compile(regx,re.IGNORECASE|re.DOTALL)
 
         #匹配offset值
         title_line_index = 0
@@ -210,6 +211,52 @@ def regx_offset_info(content,search,type="name",titles_list_=None)->list:
                 tmp.insert(0, titles_list_[search][1])
                 offset_list_.append(tmp)
         return offset_list_
+    elif type=="oneOf": #只会搜索第一个匹配到的选项
+        #匹配选项变量
+        search_name = search
+        if search_name =='':
+            search_name = r".+"
+        else:
+            search_name = search_name.replace(" ",r"\s")
+            search_name = search_name.replace("-",r"\-")
+
+        reg1 = r"([\t]*)OneOf\sPrompt:\s\"[^\"]*"
+        reg2 = r"[^\"]*\",[^\n]*\n"
+        regx = reg1+search_name+reg2
+
+        pattern = re.compile(regx, re.IGNORECASE)
+
+        list_re = None
+        option_detail_line_list = []
+        for i,elm in enumerate(content):
+            tmp = re.findall(pattern, elm)
+            if tmp:
+                reg3 = r"^"+tmp[0]+r"End"
+                pattern = re.compile(reg3,re.IGNORECASE|re.DOTALL)
+                is_match = False
+                search_line_offset = 1
+
+                while not is_match:
+                    if not re.findall(pattern,content[i+search_line_offset]):
+                        option_detail_line_list.append(content[i+search_line_offset])
+                        search_line_offset = search_line_offset + 1
+                    else:
+                        is_match = True
+                break
+
+        # 此处开始写用option_detail_line_list获取参数细节
+        option_configs_list = []
+        regx = r"OneOfOption\sOption: \"([\S\s]+)\"\sValue:\s([\S\s]+)\n"
+        pattern = re.compile(regx, re.IGNORECASE)
+        for i,elm in enumerate(option_detail_line_list):
+            option_configs = re.findall(pattern, elm)
+            if not option_configs:
+                continue
+            option_configs_list.append(option_configs[0])
+
+
+        return option_configs_list
+
 
 def get_var_store_name(hex_code):
     hex_set = hex_code
@@ -247,7 +294,7 @@ def init(skip = True,redo = False):
 
     if not regx_intel_advance_menu():
         print("找不到可以分析的解包文件...程序将终止")
-        print("如需自行解包，请将由parseData\ifrextractor.exe文件解包的setup变量表文件放在parseData文件夹下")
+        print("如需自行解包，请将由parseData\\ifrextractor.exe文件解包的setup变量表文件放在parseData文件夹下")
         os.system("pause")
         exit(1)
     uefi_variable_file_content = read_file_lines(regx_intel_advance_menu(),"r")
@@ -263,7 +310,7 @@ if __name__ == "__main__":
     else:
         exit()
     #dump bios 固件
-    dump_and_parse_bios(skip = False,redo=True)
+    #dump_and_parse_bios(skip = False,redo=True)
     # #读取文件内容变量
     # uefi_variable_file_content =  read_file_lines(regx_intel_advance_menu(),"r")
     # #匹配uefi变量地址
@@ -273,6 +320,8 @@ if __name__ == "__main__":
     #
     # for i in offset_list:
     #     print(i)
+    init()
+    print(regx_offset_info(uefi_variable_file_content,"Memory profile",type="oneOf"))
 
 
 
