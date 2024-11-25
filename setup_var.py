@@ -1,6 +1,6 @@
 
 import os,sys
-
+from shutil import get_terminal_size
 current_dir = ''
 if hasattr(sys,'_MEIPASS'):
     current_dir = os.path.dirname(sys.argv[0])
@@ -74,6 +74,7 @@ def load_json():
                     continue
                 print(f"成功匹配:{elem[2]}=={i[0]}  {elem[0]} == {i[2]}")
                 add_var_setting(elem,i[1])  # 指定选项写入待写区
+                break
     if error_key:
         return False, error_key
     return True, None
@@ -122,15 +123,21 @@ def print_offset_list(offset_list):
     size = 6
     min = 7
     max = 8
+
     j = 0
+    print("\n")
 
     for i in offset_list:
         j+=1
-        print(f"{j:<4}.{i[menu]:<40}\t名称:{i[name]:<50}\tuefi变量:{bios_parse.get_var_store_name(i[store]):<40}\t偏移:{i[offset]:<10}\t字:{i[size]:<10}\t最小值:{int(i[min],16):<10}\t最大值:{int(i[max],16):<10}")
+        common.print_c(f"{j:<4}.名称: {i[name]:<50}菜单: {i[menu]:<40}uefi变量: {bios_parse.get_var_store_name(i[store]):<40}偏移: {i[offset]:<10}最小值: {int(i[min],16):<10}最大值: {int(i[max],16):<10}","background")
+    print("\n")
 
 def print_oneOf_option_detail(offset_options):
+    print("\n")
+    blank = ' '
     common.print_c("可能的选项: ","cyan")
     common.print_c("{写入值}:--->{名称}", "magenta")
+    print("\n")
     for i,elem in enumerate(offset_options) :
         name = elem[0]
         value_list = elem[1].split(', ')
@@ -139,17 +146,24 @@ def print_oneOf_option_detail(offset_options):
         if len(value_list)>1:
             type1 = value_list[1]
             type2 = value_list[2]
-            print_string += f"  ({type1},{type2})"
-        common.print_c(print_string)
+            print_string += f"  {type1},{type2:<100}"
+        else:
+            print_string += f"{blank:<100}"
+        common.print_c(print_string,"background")
+    print("\n")
+
 
 
 
 
 def print_title_list(offset_list):
+    print("\n")
     j = 0
     for i in offset_list:
         j+=1
-        print(f"{j}.{i[1]} #{i[2]}")
+        common.print_c(f"{j}.{i[1]} #{i[2]:<100}","background")
+    print("\n")
+
 
 def gen_file_content(enable_final_reboot = True):
     '''

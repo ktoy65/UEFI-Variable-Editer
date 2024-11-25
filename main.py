@@ -26,16 +26,17 @@ try:
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, ' '.join(sys.argv), None, 1)
         exit(1)
 
-
-    print_c("本程序用于一站完成ru修改uefi变量\n"
-          "为完成目的需要涉及到修改启动项，此功能可以在程序内关闭，作为代替，请手动在运行后将文件夹下EFI文件夹复制到fat32分区自行引导\n\n"
-          ">使用方式：\n"
-          "回复菜单序号以进行下一步操作,首先通过搜寻选项找到要改的值（菜单或搜索变量）,随后保存&写入引导生成引导文件\n\n"
-          ">自动引导："
-          "\n自动配置引导会在 保存&写入引导 时将脚本修改到主机引导首位,并在重启时启动脚本，脚本运行后自动删除自身引导使系统引导回到首位\n"
-          "！！注意！！\n自动引导需要一个已经挂载的Fat32分区10M左右空间以放置引导，请提前挂载！！\n"
-          "！！注意！！\n程序暂未添加检测引导选项，如果使用自动配置引导，请勿多次保存配置，这将会导致添加多个引导选项，请重启配置完后再保存。\n")
-    print_c("MADE BY 不锈钢电热水壶")
+    columns, rows = get_terminal_size()
+    print_c("\n" * rows)
+    print_c("本程序用于一站完成ru修改uefi变量\n","blue")
+    print_c("为完成目的需要涉及到修改启动项，此功能可以在程序内关闭，作为代替，请手动在运行后将文件夹下EFI文件夹复制到fat32分区自行引导\n")
+    print_c(">使用方式：\n","cyan")
+    print_c("回复菜单序号以进行下一步操作,首先通过搜寻选项找到要改的值（菜单或搜索变量）,随后保存&写入引导生成引导文件\n")
+    print_c(">自动引导：\n","cyan")
+    print_c("自动配置引导会在 保存&写入引导 时将脚本修改到主机引导首位,并在重启时启动脚本，脚本运行后自动删除自身引导使系统引导回到首位\n")
+    print_c(      "！！注意！！\n自动引导需要一个已经挂载的Fat32分区10M左右空间以放置引导，请提前挂载！！\n"
+          "！！注意！！\n程序暂未添加检测引导选项，如果使用自动配置引导，请勿多次保存配置，这将会导致添加多个引导选项，请重启配置完后再保存。\n","magenta")
+    print_c("MADE BY 不锈钢电热水壶","grey")
     os.system("pause")
 
     arg = input("是否跳过BIOS DUMP？(y/n 默认：n）")
@@ -99,8 +100,8 @@ try:
                 if (which is None) or(which == "") or int(which) > len(result) or int(which) <= 0:
                     return_string = ("无效选择","red")
                     continue
-
-                setup_var.print_oneOf_option_detail(setup_var.search_oneOf_offset_options_detail(result[int(which)-1][2]))
+                if (result[int(which) - 1][1]) == "OneOf":
+                    setup_var.print_oneOf_option_detail(setup_var.search_oneOf_offset_options_detail(result[int(which)-1][2]))
                 value = input("改多少：>")
                 if (value == "") or not setup_var.add_var_setting(result[int(which)-1], int(value)):
                     return_string = ("无效选择","red")
@@ -232,3 +233,4 @@ try:
         return_string = ("成功","cyan")
 except Exception as e:
     print_c(e,"red")
+    os.system("pause")

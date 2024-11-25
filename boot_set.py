@@ -53,7 +53,7 @@ def get_boot_disk():
     return efi_disks_list
 
 def get_disk_guid(disk_volume_signal):
-    c = wmi.WMI(namespace='root\\Microsoft\\Windows\\Storage')
+    c = WMI(namespace='root\\Microsoft\\Windows\\Storage')
 
     # 获取所有分区
     partitions = c.MSFT_Partition()
@@ -113,7 +113,7 @@ def save_and_set_boot():
     return True,None
 
 def save_and_only_create_boot_dir():
-    rewrite_nsh(setup_var.gen_file_content(False), False)
+    rewrite_nsh(setup_var.gen_file_content(True), False)
     common.check_and_create_directory(os.path.join(current_dir, "EFI"))
     common.check_and_create_directory(os.path.join(current_dir, "EFI", "Boot"))
     for r,d,f in os.walk(boot_tools):

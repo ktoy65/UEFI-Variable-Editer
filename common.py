@@ -3,6 +3,7 @@ import ctypes
 import subprocess
 import shutil
 import json
+background_state = True
 
 def write_json(file_path, data):
     with open(file_path, 'w', encoding='utf-8') as file:
@@ -70,9 +71,21 @@ def write_file(file_path,content,type = "wb"):
         with open(file_path, type,encoding='utf-8') as file:
             file.write(content)
 
+
 def print_c(string,color:str = "write"):
     if color is None:
         return
+    global background_state
+    if color == "background":
+        if background_state:
+            print(f"\033[1;37;100m{string}\033[0m",flush=True)
+            background_state = False
+            return
+        else:
+            print(string)
+            background_state = True
+            return
+
     if color == "write":
         print(f"{string}")
         return
