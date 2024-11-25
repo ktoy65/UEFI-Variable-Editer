@@ -1,8 +1,12 @@
 import os
 import sys
-current_dir = os.path.dirname(os.path.abspath(__file__))
+current_dir = ''
+if hasattr(sys,'_MEIPASS'):
+    current_dir = os.path.dirname(sys.argv[0])
+else:
+    current_dir = os.path.dirname(os.path.abspath(__file__))
 if __name__ == "__main__":sys.path.append(current_dir)
-import wmi
+from wmi import WMI
 import common
 import setup_var
 
@@ -35,7 +39,7 @@ endfor
 '''
 
 def get_boot_disk():
-    c = wmi.WMI()
+    c = WMI()
 
     # 获取所有逻辑磁盘
     logical_disks = c.Win32_LogicalDisk()

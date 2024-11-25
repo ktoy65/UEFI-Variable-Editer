@@ -1,6 +1,10 @@
 import os
 import sys
-current_dir = os.path.dirname(os.path.abspath(__file__))
+current_dir = ''
+if hasattr(sys,'_MEIPASS'):
+    current_dir = os.path.dirname(sys.argv[0])
+else:
+    current_dir = os.path.dirname(os.path.abspath(__file__))
 if __name__ == "__main__":sys.path.append(current_dir)
 from common import *
 import re
@@ -19,7 +23,6 @@ def get_Me_Version():
     # 构建指令
     command = ['pnputil', '/enum-devices','/properties']
     output = run_command(command)
-    print 
 
     # 匹配Intel(R) Management Engine Interface 区块及其信息
     rstr_get_me_device = r"(ID:(?:(?!\n\n).)*?Intel\(R\) Management Engine Interface(?:(?!\n\n).)*?)(?=\n\n|$)"
@@ -67,6 +70,7 @@ def dumpBios():
             for r,d,f, in os.walk(os.path.join(r'dumpTools', dir)):
                 for file in f:
                     if file == "FPTW64.exe":
+                        print(current_dir)
                         output = run_command([os.path.join(current_dir,r , file),"-bios","-d",os.path.join(current_dir,"dump.bin")])
             print("提取完成 ...")
         else:

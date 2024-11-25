@@ -1,8 +1,11 @@
 import os
 import sys
-import ctypes
-current_dir = os.path.dirname(os.path.abspath(__file__))
-if __name__ == "__main__":sys.path.append(current_dir)
+current_dir = ''
+if hasattr(sys,'_MEIPASS'):
+    current_dir = os.path.dirname(sys.argv[0])
+else:
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
 from common import *
 import bios_parse
 import setup_var
@@ -11,10 +14,11 @@ import boot_set
 set_auto_boot = True
 cur_title = None
 
-if __name__ == "__main__":
+
+try:
     columns, rows = get_terminal_size()
     print_c("\n" * rows)
-    
+
     if is_admin():
         print_c("已在管理员权限下运行\n")
     else:
@@ -40,9 +44,18 @@ if __name__ == "__main__":
     else:
         bios_parse.init(False,True)
 
-    setup_var.load_json()
-
     return_string = ("",None)#记录每次指令的返回提示
+    load_info = setup_var.load_json()
+    if not load_info[0]:
+        if not load_info[1] == "NoFile":
+            print_string = ''
+            for i in load_info[1]:
+                print_string += f"报存选项{i}读取失败，已跳过读取"
+                return_string = (print_string,"red")
+    else:
+        return_string = ("读取成功","cyan")
+
+
     while True:
 
         # 打印新页面
@@ -83,7 +96,7 @@ if __name__ == "__main__":
                 setup_var.print_offset_list(result)
                 which = input("哪一个：>")
 
-                if (which == "") or int(which) > len(result) or int(which) <= 0:
+                if (which is None) or(which == "") or int(which) > len(result) or int(which) <= 0:
                     return_string = ("无效选择","red")
                     continue
 
@@ -217,3 +230,5 @@ if __name__ == "__main__":
             continue
 
         return_string = ("成功","cyan")
+except Exception as e:
+    print_c(e,"red")
