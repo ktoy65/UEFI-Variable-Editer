@@ -11,6 +11,7 @@ import common
 import bios_parse
 add_options_list_final_code = []
 add_options_list = []
+add_oneOf_display_cache = []
 
 setup_var = "setup_var.efi"
 
@@ -103,12 +104,26 @@ def add_var_setting(search_list,value):
         return False
     add_options_list_final_code.append(get_offset_setting_code(bios_parse.get_var_store_name(search_list[store]),search_list[offset],value,int(float(search_list[size])/8)))
     add_options_list.append([search_list[name],value,search_list[menu]])
+    if search_list[type] == "OneOf":
+        offset_options = search_oneOf_offset_options_detail(search_list[name])
+        for i, elem in enumerate(offset_options):
+            value_list = elem[1].split(', ')
+            value1 = value_list[0]
+            if int(value1) == value:
+                add_oneOf_display_cache.append(elem[0])
+                break
+        else:
+            add_oneOf_display_cache.append(str(value))
+
+    else:
+        add_oneOf_display_cache.append(str(value))
     refresh_json()
     return True
 
 def rm_var_setting(index):
     add_options_list_final_code.pop(index)
     add_options_list.pop(index)
+    add_oneOf_display_cache.pop(index)
     refresh_json()
 
 #----------------------------------------------------------------
@@ -136,13 +151,13 @@ def print_oneOf_option_detail(offset_options):
     print("\n")
     blank = ' '
     common.print_c("可能的选项: ","cyan")
-    common.print_c("{写入值}:--->{名称}", "magenta")
+    common.print_c("\"{写入值}\" : ---> \"{名称}\"", "magenta")
     print("\n")
     for i,elem in enumerate(offset_options) :
         name = elem[0]
         value_list = elem[1].split(', ')
         value = value_list[0]
-        print_string = f"{value}:--->{name}"
+        print_string = f"\"{value}\" : ---> \"{name}\""
         if len(value_list)>1:
             type1 = value_list[1]
             type2 = value_list[2]

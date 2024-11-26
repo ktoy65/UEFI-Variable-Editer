@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fe8d0dd1-0c73-45e0-9d18-5827bdab1771" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boot_set.py" beforeDir="false" afterPath="$PROJECT_DIR$/boot_set.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bios_parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/bios_parse.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup_var.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup_var.py" afterDir="false" />
     </list>
@@ -42,10 +41,11 @@
     &quot;Python.boot_set.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.setup_var.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/WinUsers/abc67/Documents/GitHub/UEFI-Variable-Editer&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/WinUsers/abc67/Documents/GitHub/BIOSUtilities&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -61,11 +61,11 @@
       <recent name="C:\Users\abc67\Documents\GitHub\UEFI-Variable-Editer" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\WinUsers\abc67\Documents\GitHub\UEFI-Variable-Editer" />
       <recent name="C:\Users\abc67\Documents\GitHub\UEFI-Variable-Editer" />
       <recent name="C:\Users\abc67\Documents\GitHub\UEFI-Variable-Editer\bootTools" />
       <recent name="C:\Users\abc67\Documents\GitHub\UEFI-Variable-Editer\parseData" />
       <recent name="C:\Users\abc67\Documents\GitHub\UEFI-Variable-Editer\python" />
-      <recent name="C:\Users\abc67\Documents\GitHub\UEFI-Variable-Editer\dumpTools" />
     </key>
   </component>
   <component name="RunManager">
@@ -131,7 +131,10 @@
       <workItem from="1732472256743" duration="14709000" />
       <workItem from="1732515093241" duration="7639000" />
       <workItem from="1732522905302" duration="11437000" />
-      <workItem from="1732534722436" duration="462000" />
+      <workItem from="1732534722436" duration="771000" />
+      <workItem from="1732557241645" duration="421000" />
+      <workItem from="1732557707687" duration="5276000" />
+      <workItem from="1732626090450" duration="20000" />
     </task>
     <servers />
   </component>
@@ -139,10 +142,11 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$test.coverage" NAME="test 覆盖结果" MODIFIED="1732560438807" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$setup_var.coverage" NAME="setup_var 覆盖结果" MODIFIED="1732520857101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$bios_parse.coverage" NAME="bios_parse 覆盖结果" MODIFIED="1732517904191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$MEA.coverage" NAME="MEA 覆盖结果" MODIFIED="1730532168211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$main.coverage" NAME="main 覆盖结果" MODIFIED="1732533869320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$main.coverage" NAME="main 覆盖结果" MODIFIED="1732562694178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/UEFI_Variable_Editer$boot_set.coverage" NAME="boot_set 覆盖结果" MODIFIED="1730529547757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

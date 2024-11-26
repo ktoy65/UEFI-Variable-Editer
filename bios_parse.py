@@ -181,16 +181,22 @@ def regx_offset_info(content,search,type ="name",titles_list_=None)->list:
             search_name = search_name.replace("-",r"\-")
 
         #匹配符----选择offset值
-        reg1 = r"([\S]+)\sPrompt:\s\"([^\"]*"
-        reg2 = r"[^\"]*)\",\sHelp:\s\"([\S\s\n]*)\",[^\n]*,\sVarStoreId:\s([0-9A-Fx]+),\sVarOffset:\s([0-9A-Fx]+).*,\sSize:\s([0-9A-Fx]+),\sMin:\s([0-9A-Fx]+),\sMax:\s([0-9A-Fx]+)"
-        regx = reg1+search_name+reg2
+        reg1 = r"([\S]+)\sPrompt:\s\"([\S\s]*"
+        reg2 = r"[\S\s]*)\""
+        reg3 = r",\sHelp:\s\"([\S\s\n]*)\",[^\n]*,\sVarStoreId:\s([0-9A-Fx]+),\sVarOffset:\s([0-9A-Fx]+).*,\sSize:\s([0-9A-Fx]+),\sMin:\s([0-9A-Fx]+),\sMax:\s([0-9A-Fx]+)"
+        regx = reg1+search_name+reg2+reg3
         pattern = re.compile(regx,re.IGNORECASE|re.DOTALL)
+        regx1 = reg1+search_name+reg2
+        pattern1 = re.compile(regx1, re.IGNORECASE | re.DOTALL)
 
-        #匹配offset值
+        #匹配offset值y
         title_line_index = 0
         for i in range(len(content)):
             title_name = ''
             tmp = re.findall(pattern, content[i])
+            if not tmp:
+                if re.findall(pattern1, content[i]):
+                    tmp = re.findall(pattern, content[i] + content[i + 1])
             if tmp:#去除空白选项
                 for j in range(title_line_index,len(titles_list_)): #将菜单名称与选项进行匹配，j为检测到的title所在列表的index
                     if titles_list_[j][0] > i: #如果title所在行数大于了匹配选项的行数，就将匹配选项分配给上一个title，同时记录j的值，下次直接从j-1开始判定
