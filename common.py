@@ -3,7 +3,18 @@ import ctypes
 import subprocess
 import shutil
 import json
+import requests
 background_state = True
+from tqdm import tqdm
+
+import zipfile
+import os
+
+def unzip_file(zip_file_path, extract_to_path):
+    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+        zip_ref.extractall(extract_to_path)
+
+
 
 def write_json(file_path, data):
     with open(file_path, 'w', encoding='utf-8') as file:
@@ -41,6 +52,23 @@ def check_and_create_directory(directory):
         print(f"文件夹 {directory} 已创建。")
     else:
         print(f"文件夹 {directory} 已经存在。")
+
+
+def download_file(url, local_filename):
+    response = requests.get(url, stream=True)
+    total_size = int(response.headers.get('content-length', 0))
+    block_size = 1024  # 1 KB
+    progress_bar = tqdm(total=total_size, unit='iB', unit_scale=True)
+
+    with open(local_filename, 'wb') as file:
+        for data in response.iter_content(block_size):
+            progress_bar.update(len(data))
+            file.write(data)
+    progress_bar.close()
+
+
+
+
 
 def read_file(file_path,type = "rb"):
     try:
