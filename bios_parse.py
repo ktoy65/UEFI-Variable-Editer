@@ -1,5 +1,8 @@
 import os
 import sys
+
+import common
+
 current_dir = ''
 if hasattr(sys,'_MEIPASS'):
     current_dir = os.path.dirname(sys.argv[0])
@@ -11,6 +14,24 @@ import re
 import uefi_firmware
 import shutil
 
+download_link = [r"https://comsystem-tlt.ru/ME_TXE/Intel%20CSME%20System%20Tools%20v16.0%20r8.zip",
+                 r"https://comsystem-tlt.ru/ME_TXE/CSME%20System%20Tools%20v15.40%20r3.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/CSME%20System%20Tools%20v15.0%20r15.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/CSME%20System%20Tools%20v14.5%20r7.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/CSME%20System%20Tools%20v14.0.20+%20r20.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/Intel%20CSME%20System%20Tools%20v14.0.11-%20r1.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/Intel%20CSME%20System%20Tools%20v14.0.11-%20r1.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/CSME%20System%20Tools%20v13.50%20r3.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/CSME%20System%20Tools%20v13.0%20r7.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/CSME%20System%20Tools%20v12%20r38.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/CSME%20System%20Tools%20v11%20r46.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/Intel%20ME%20System%20Tools%20v10.0%20r8.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/Intel%20ME%20System%20Tools%20v9.5%20r6.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/Intel%20ME%20System%20Tools%20v9.1%20r7.rar",
+                 r"https://comsystem-tlt.ru/ME_TXE/Intel%20ME%20System%20Tools%20v9.0%20r1.rar",
+
+                 r"https://comsystem-tlt.ru/ME_TXE/CSME%20System%20Tools%20v16.1%20r0.zip",
+                 ]
 uefi_variable_file_content = None
 var_store_list = None
 
@@ -62,6 +83,7 @@ def dumpBios():
 
 
     #提取dump.bin
+
     for dir in os.listdir(r".\dumpTools"):
         match = re.search(restr_get_dir, dir)
         if match:
@@ -72,12 +94,48 @@ def dumpBios():
                     if file == "FPTW64.exe":
                         print(current_dir)
                         output = run_command([os.path.join(current_dir,r , file),"-bios","-d",os.path.join(current_dir,"dump.bin")])
-            print("提取完成 ...")
+                        return
+    else:
+        arg = input("未找到提取工具是否尝试查找工具并下载？(y/n 默认：n）")
+        if arg == 'y' or arg == 'Y' or arg == 'yes' or arg == 'Yes' or arg == 'YES':
+            for i in download_link:
+                result_ = re.findall(fr"v{version[0]}\S{version[1]}.*(\..*)$",i)
+                if result_:
+                    print("正在下载...")
+                    common.download_file(i,os.path.join(current_dir,"dumptool"+result_[0]))
+                    print("正在解压...")
+                    common.unzip_file(os.path.join(current_dir,"dumptool"+result_[0]),os.path.join(current_dir,"dumpTools"))
+                    break
+                else:
+                    continue
         else:
             print(f"未能找到对应版本的提取工具 v{version[0]}.{version[1]},请在网站自行下载工具解压放在dumpTools文件夹下,并保证文件夹有 v{version[0]}.{version[1]} 字符串\n")
             print("https://comsystem-tlt.ru/obzori/me-txe-region     Intel CSME System Tools xx.x")
             print(f"如果不希望通过本程序自动提取bios，请将bios提取文件放置于根目录并保存为dump.bin")
             os.system("pause")
+            exit(1)
+
+
+
+    for dir in os.listdir(r".\dumpTools"):
+        match = re.search(restr_get_dir, dir)
+        if match:
+            print(f"找到对应版本的提取工具: {match.group()}")
+            print("开始提取 ...")
+            for r,d,f, in os.walk(os.path.join(r'dumpTools', dir)):
+                for file in f:
+                    if file == "FPTW64.exe":
+                        print(current_dir)
+                        output = run_command([os.path.join(current_dir,r , file),"-bios","-d",os.path.join(current_dir,"dump.bin")])
+                        return
+        else:
+            print(f"未能找到对应版本的提取工具 v{version[0]}.{version[1]},请在网站自行下载工具解压放在dumpTools文件夹下,并保证文件夹有 v{version[0]}.{version[1]} 字符串\n")
+            print("https://comsystem-tlt.ru/obzori/me-txe-region     Intel CSME System Tools xx.x")
+            print(f"如果不希望通过本程序自动提取bios，请将bios提取文件放置于根目录并保存为dump.bin")
+            os.system("pause")
+            exit(1)
+
+
 
 def dump_and_parse_bios(skip = True,redo = False):
     if skip:
@@ -110,6 +168,7 @@ def dump_and_parse_bios(skip = True,redo = False):
             #firmware.showinfo()
             firmware.dump("bios")
 
+
         # 找到bios地址文件
         list_result_files = []#存储可能的匹配对象
         bstr_pattern = b'\x53\x00\x65\x00\x74\x00\x75\x00\x70\x00\x00\x00'# setup
@@ -119,12 +178,25 @@ def dump_and_parse_bios(skip = True,redo = False):
                 if re.match(restr_file_ui, file):
                     dirfile =os.path.join(r,file)
                     file_content = read_file(dirfile)
+                    print(f"file:{r}\\{file}")
                     if file_content and (bstr_pattern == file_content):
                         list_result_files.append(dirfile)
-
         # 解析bios
-        copy_file(os.path.join(current_dir,os.path.join(os.path.dirname(list_result_files[0]),"section2.pe")),os.path.join(current_dir,"parseData"))
-        out = run_command([r"parseData\ifrextractor.exe",os.path.join(current_dir,"parseData","section2.pe")])
+        pe_file_name = None
+        for i in range(10):
+            result_ = os.path.isfile(os.path.join(current_dir,os.path.join(os.path.dirname(list_result_files[0]),f"section{i}.pe")))
+            if result_:
+                pe_file_name = f"section{i}.pe"
+                copy_file(os.path.join(current_dir, os.path.join(os.path.dirname(list_result_files[0]), pe_file_name)),
+                          os.path.join(current_dir, "parseData"))
+                break
+        else:
+            print("没有找到sectionX.pe")
+            exit(1)
+
+
+        print(os.path.join(current_dir, os.path.join(os.path.dirname(list_result_files[0]))))
+        out = run_command([r"parseData\ifrextractor.exe",os.path.join(current_dir,"parseData",pe_file_name)])
         print(out)
         shutil.rmtree(os.path.join(current_dir,"bios"))
 
@@ -330,8 +402,8 @@ if __name__ == "__main__":
     #
     # for i in offset_list:
     #     print(i)
-    init()
-    print(regx_offset_info(uefi_variable_file_content,"Memory profile",type="oneOf"))
+    #init()
+    dump_and_parse_bios(False,False)
 
 
 

@@ -10,7 +10,7 @@ if __name__ == "__main__":sys.path.append(current_dir)
 import common
 import bios_parse
 add_options_list_final_code = []
-add_options_list = []
+add_options_list = []   
 add_oneOf_display_cache = []
 
 setup_var = "setup_var.efi"
